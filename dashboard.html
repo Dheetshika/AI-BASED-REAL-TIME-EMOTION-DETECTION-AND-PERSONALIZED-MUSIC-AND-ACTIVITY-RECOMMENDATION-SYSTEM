@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Emotion Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+text-align:center;
+}
+
+canvas{
+background:white;
+margin-top:40px;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Emotion Analytics Dashboard</h1>
+
+<canvas id="emotionChart" width="400" height="200"></canvas>
+
+<script>
+
+fetch("/emotion-data")
+.then(response => response.json())
+.then(data => {
+
+const labels = Object.keys(data)
+const values = Object.values(data)
+
+new Chart(document.getElementById("emotionChart"), {
+type: "bar",
+
+data: {
+labels: labels,
+
+datasets: [{
+label: "Emotion Count",
+data: values
+}]
+}
+
+})
+
+})
+
+</script>
+
+</body>
+</html>
