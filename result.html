@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Emotion Recommendation</title>
+
+<style>
+
+body{
+text-align:center;
+font-family:Arial;
+margin:0;
+padding:0;
+}
+
+/* MAIN CARD */
+
+.main-card{
+background:white;
+width:70%;
+margin:auto;
+padding:30px;
+border-radius:12px;
+box-shadow:0px 0px 15px rgba(0,0,0,0.3);
+}
+
+/* CARD CONTAINER */
+
+.card-container{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+/* SMALL CARDS */
+
+.card{
+background:white;
+width:180px;
+padding:20px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+text-align:center;
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.1);
+background:#f2f2f2;
+}
+
+.card p{
+font-size:16px;
+margin-top:10px;
+}
+
+/* BUTTON */
+
+button{
+padding:8px 15px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.card button{
+background:black;
+color:white;
+}
+
+.view-btn{
+background-color:#333;
+color:white;
+margin-top:20px;
+padding:10px 20px;
+}
+
+.pdf-btn{
+background-color:black;
+color:white;
+padding:12px 25px;
+font-size:16px;
+}
+
+</style>
+
+</head>
+
+<body style="background-color: {{ data.color }};">
+
+<h1>Detected Emotion</h1>
+<h2>{{ emotion }}</h2>
+
+<hr>
+
+<div class="main-card">
+
+<!-- MUSIC SECTION -->
+
+<h3>🎵 Recommended Music</h3>
+
+<div class="card-container">
+
+{% for item in data.music[:3] %}
+
+<div class="card">
+
+<h2>🎵</h2>
+
+<p>{{ item.name }}</p>
+
+<a href="{{ item.link }}" target="_blank">
+<button>Play</button>
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<a href="/music/{{emotion}}">
+<button class="view-btn">
+View All Music
+</button>
+</a>
+
+<hr>
+
+<!-- BOOKS SECTION -->
+
+<h3>📚 Recommended Books</h3>
+
+<div class="card-container">
+
+{% for item in data.books[:3] %}
+
+<div class="card">
+
+<h2>📚</h2>
+
+<p>{{ item.name }}</p>
+
+<a href="{{ item.link }}" target="_blank">
+<button>Read</button>
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<a href="/books/{{emotion}}">
+<button class="view-btn">
+View All Books
+</button>
+</a>
+
+<hr>
+
+<!-- GAMES SECTION -->
+
+<h3>🎮 Recommended Games</h3>
+
+<div class="card-container">
+
+{% for item in data.games[:3] %}
+
+<div class="card">
+
+<h2>🎮</h2>
+
+<p>{{ item.name }}</p>
+
+<a href="{{ item.link }}" target="_blank">
+<button>Play</button>
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<a href="/games/{{emotion}}">
+<button class="view-btn">
+View All Games
+</button>
+</a>
+
+<hr>
+
+<h3>🎨 Color Therapy</h3>
+
+<p>
+Recommended Color:
+<strong>{{ data.color }}</strong>
+</p>
+
+</div>
+
+<br>
+
+<!-- PDF DOWNLOAD -->
+
+<h2>📄 Download AI Emotion Report</h2>
+
+<a href="/download/{{emotion}}">
+
+<button class="pdf-btn">
+Download PDF Report
+</button>
+
+</a>
+
+<br><br>
+
+<a href="/">
+<button>
+Go Back
+</button>
+</a>
+
+<hr>
+
+<h2>Did these suggestions help you?</h2>
+
+<form action="/feedback" method="post">
+
+<button name="feedback" value="I feel better 😊">
+I feel better 😊
+</button>
+
+<button name="feedback" value="Still feeling sad 😔">
+Still feeling sad 😔
+</button>
+
+<button name="feedback" value="Suggestions were helpful 👍">
+Suggestions helped 👍
+</button>
+
+</form>
+
+{% if emotion == "Sad" or emotion == "Fear" or emotion == "Angry" %}
+
+<hr>
+
+<h2>🧠 AI Therapy Recommendation</h2>
+
+<ul style="list-style:none; font-size:18px;">
+
+<li>🌿 Take 5 deep breaths</li>
+
+<li>🎧 Listen to calming music</li>
+
+<li>🚶 Take a short walk</li>
+
+<li>🧘 Practice meditation</li>
+
+</ul>
+
+<h3>Relaxation Video</h3>
+
+<iframe
+width="420"
+height="250"
+src="https://www.youtube.com/embed/inpok4MKVLM">
+</iframe>
+
+{% endif %}
+
+</body>
+</html>
